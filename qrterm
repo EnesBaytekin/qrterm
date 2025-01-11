@@ -1,4 +1,4 @@
-#!/bin/python
+#!/usr/bin/env python3
 
 import qrcode
 
@@ -45,8 +45,35 @@ def qr_to_terminal_small(qr_matrix):
 
 if __name__ == "__main__":
     from sys import argv
-    if len(argv) != 2:
-        print("Provide a text as argument to generate a qrcode.")
+
+    def help():
+        print("""\
+Usage:
+        qrterm [options] <text>
+
+Options:
+    -l, --large     Print qrcode larger.""")
         exit(1)
-    qr = generate_qr(argv[1])
-    qr_to_terminal_small(qr)
+
+    if len(argv) == 1:
+        help()
+    
+    argv.pop(0) # pop main file name
+    
+    is_large = False
+    while "-l" in argv:
+        argv.remove("-l")
+        is_large = True
+    while "--large" in argv:
+        argv.remove("--large")
+        is_large = True
+
+    if len(argv) != 1:
+        help()
+
+    qr = generate_qr(argv[0])
+
+    if is_large:
+        qr_to_terminal(qr)
+    else:
+        qr_to_terminal_small(qr)
