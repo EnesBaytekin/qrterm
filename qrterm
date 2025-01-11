@@ -34,10 +34,10 @@ def get_symbol(up, down):
 
 def qr_to_terminal_small(qr_matrix):
     size = len(qr_matrix)
-    for y in range(0, size, 2):
-        for x in range(size):
-            up = qr_matrix[x][y]
-            if y+1 < size: down = qr_matrix[x][y+1]
+    for r in range(0, size, 2):
+        for c in range(size):
+            up = qr_matrix[r][c]
+            if r+1 < size: down = qr_matrix[r+1][c]
             else:          down = True
             symbol = get_symbol(up, down)
             print(symbol, end="")
